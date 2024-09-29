@@ -80,17 +80,18 @@ const CommentModalCard: React.FC<CommentModalProps> = ({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
-        <h2 className="text-xl font-bold mb-4">コメント</h2>
+    // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-1/2 rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-bold">コメント</h2>
         {/* 既存のコメントリスト表示 */}
         <div className="mb-6">
-          <ul className="border border-gray-300 rounded-md max-h-40 overflow-y-auto bg-gray-50">
+          <ul className="max-h-40 overflow-y-auto rounded-md border border-gray-300 bg-gray-50">
             {comments && comments.length > 0 ? (
               comments.map((commentObj, index) => (
-                <li key={index} className="p-3 border-b border-gray-200 last:border-none">
+                <li key={index} className="border-b border-gray-200 p-3 last:border-none">
                   {/* 上部: ユーザー名といいねボタン */}
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="mb-2 flex items-center justify-between">
                     <strong className="text-sm text-purple-600">
                       {commentObj.addedBy ? commentObj.addedBy.userName : '作成者'}
                     </strong>
@@ -101,7 +102,7 @@ const CommentModalCard: React.FC<CommentModalProps> = ({
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        className="size-6"
                       >
                         <path
                           strokeLinecap="round"
@@ -113,9 +114,9 @@ const CommentModalCard: React.FC<CommentModalProps> = ({
                   </div>
 
                   {/* 下部: コメントと削除ボタン */}
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <span className="text-gray-700">{commentObj.comment}</span>
-                    <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-2 py-1 rounded-md">
+                    <button className="rounded-md bg-gray-300 px-2 py-1 font-semibold text-gray-800 hover:bg-gray-400">
                       削除
                     </button>
                   </div>
@@ -128,10 +129,10 @@ const CommentModalCard: React.FC<CommentModalProps> = ({
         </div>
 
         {/* 新規コメント入力エリア */}
-        <h2 className="text-xl font-bold mb-4">コメントを追加</h2>
+        <h2 className="mb-4 text-xl font-bold">コメントを追加</h2>
 
         <textarea
-          className="border w-full p-2 mb-4 rounded-md"
+          className="mb-4 w-full rounded-md border p-2"
           rows={2}
           onChange={(e) => setComment(e.target.value)}
         />
@@ -139,12 +140,12 @@ const CommentModalCard: React.FC<CommentModalProps> = ({
         {/* 送信＆キャンセルボタン */}
         <div className="flex justify-end">
           <button
-            className=" text-white px-4 py-2 rounded mr-2 bg-purple-500 hover:bg-purple-600"
+            className=" mr-2 rounded bg-purple-500 px-4 py-2 text-white hover:bg-purple-600"
             onClick={() => handleSubmitComment(comment)}
           >
             追加
           </button>
-          <button className="bg-gray-300 hover:bg-gray-200 px-4 py-2 rounded" onClick={onClose}>
+          <button className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-200" onClick={onClose}>
             キャンセル
           </button>
         </div>

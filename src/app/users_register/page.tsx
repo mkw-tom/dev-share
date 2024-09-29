@@ -137,7 +137,7 @@ const Register = () => {
               // value={state.userImage}
               onChange={(e) => handleChange(e)}
               placeholder="イメージ"
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="file-input file-input-bordered mt-1 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
           <div>
