@@ -1,6 +1,8 @@
 'use client'
 
+import { storage } from '@/lib/firebase/firebase'
 import { format } from 'date-fns'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
@@ -34,6 +36,7 @@ const AddPage = () => {
   const [userId, setUserId] = useState<string | null>(null)
   const [userName, setUserName] = useState<string | null>(null)
   const [notes, setNotes] = useState('') // 工夫した点を記入する欄を追加
+  const [fileName, setFileName] = useState<string>('')
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId')
@@ -42,6 +45,17 @@ const AddPage = () => {
     if (storedUserId) setUserId(storedUserId)
     if (storedUserName) setUserName(storedUserName)
   }, [])
+
+  const saveImage = async (file: File) => {
+    const storageRef = ref(storage, `images/${file?.name}`)
+    await uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('success to save a photo')
+    })
+    const gsReference = ref(storage, `images/${file?.name}`)
+    await getDownloadURL(gsReference).then((url) => {
+      setFileName(url)
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -60,6 +74,7 @@ const AddPage = () => {
 
     const newProject = {
       title,
+      projectImage: fileName,
       type, // アプリの種類を追加
       language: language.map((lang) => lang.value),
       duration: `${format(startDuration, 'yyyy-MM-dd')} から ${format(endDuration, 'yyyy-MM-dd')}`,
@@ -115,6 +130,15 @@ const AddPage = () => {
             onChange={(e) => setType(e.target.value)}
             className="w-full rounded border p-2"
             placeholder="アプリの種類"
+          />
+        </div>
+        <div className="mt-4">
+          <label className="mb-1 block">アプリの種類:</label>
+          <input
+            type="file"
+            onChange={(e) => saveImage(e.target.files?.[0] as File)}
+            className="file-input file-input-bordered w-full rounded"
+            placeholder="紹介画像"
           />
         </div>
         <div className="mt-4">

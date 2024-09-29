@@ -30,14 +30,14 @@ type Comment = {
 const selectOpetions = ['JavaScript', 'TypeScript', 'React', 'Next.js', 'Java', 'Ruby']
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<ProjectType[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null)
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState<string>('') // 検索用のステート
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects) // フィルタリングされたプロジェク
+  const [filteredProjects, setFilteredProjects] = useState<ProjectType[]>(projects) // フィルタリングされたプロジェク
 
   useEffect(() => {
     const fetchProjects = async () => {

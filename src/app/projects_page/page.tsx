@@ -9,7 +9,7 @@ import RatingModalCardProps from './components/RatingModalCard'
 const Page = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [projects, setProjects] = useState<any[]>([])
+  const [projects, setProjects] = useState<ProjectType[]>([])
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [isRatingModalOpen, setIsRatingModalOpen] = useState<boolean>(false)
@@ -55,13 +55,13 @@ const Page = () => {
   }, [apiUrl])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOpenModal = (project: any) => {
+  const handleOpenModal = (project: ProjectType) => {
     setCurrentProject(project)
     setIsModalOpen(true)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOpenRatingModal = (project: any) => {
+  const handleOpenRatingModal = (project: ProjectType) => {
     setCurrentProject(project)
     setIsRatingModalOpen(true)
   }
@@ -138,11 +138,21 @@ const Page = () => {
           </Link>
         </div>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        {isLoading ? (
+        {isLoading && !errorMessage ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="w-68 flex h-[175px] animate-pulse flex-col gap-5 rounded-sm bg-gray-200 p-5">
-              <div className="h-10 w-28 rounded-full bg-gray-300 "></div>
-              <div className="h-36 w-2/3 rounded-sm bg-gray-300 "></div>
+            <div className="w-68 flex h-auto animate-pulse flex-col gap-2 rounded-sm bg-gray-200 p-5">
+              <div className="h-8 w-28 rounded-full bg-gray-300 "></div>
+              <div className="h-72 w-full rounded-sm bg-gray-300 "></div>
+              <div className="mt-3 h-6 w-1/3 rounded-full bg-gray-300"></div>
+              <div className="h-6 w-2/3 rounded-full bg-gray-300 "></div>
+              <div className="h-6 w-2/5 rounded-full bg-gray-300 "></div>
+            </div>
+            <div className="w-68 flex h-auto animate-pulse flex-col gap-2 rounded-sm bg-gray-200 p-5">
+              <div className="h-8 w-28 rounded-full bg-gray-300 "></div>
+              <div className="h-72 w-full rounded-sm bg-gray-300 "></div>
+              <div className="mt-3 h-6 w-1/3 rounded-full bg-gray-300"></div>
+              <div className="h-6 w-2/3 rounded-full bg-gray-300 "></div>
+              <div className="h-6 w-2/5 rounded-full bg-gray-300 "></div>
             </div>
           </div>
         ) : (
